@@ -1,7 +1,7 @@
 package com.tipdaddy.adventofcode;
 
 import com.tipdaddy.adventofcode.util.Day;
-import com.tipdaddy.adventofcode.util.DayGetter;
+import java.lang.reflect.Constructor;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -9,12 +9,12 @@ public class AdventOfCode {
 
     private static final Set<String> VALID_YEARS = Set.of("2015", "2022");
 
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         System.out.println("Welcome to tipdaddy's Advent of Code implementation");
         System.out.println("To run a file, start by entering a year to run from.\n");
 
         final Scanner scanner = new Scanner(System.in);
-        final DayGetter dayGetter = new DayGetter();
         while (true) {
             System.out.println("Valid years include: " + VALID_YEARS);
             System.out.println("To quit the program, simply enter q as the year.");
@@ -35,11 +35,13 @@ public class AdventOfCode {
                         break;
                     } else {
                         // Get the right file and run it.
-                        Day dayToRun = dayGetter.getDay(year, day);
-                        if (dayToRun == null) {
-                            System.out.println("Not a valid day to run.");
-                        } else {
+                        try {
+                            Class<Day> dayClass = (Class<Day>) Class.forName(String.format("com.tipdaddy.adventofcode.year_%s.Day%s", year, day));
+                            Constructor<Day> constructor = dayClass.getConstructor();
+                            Day dayToRun = constructor.newInstance();
                             dayToRun.run();
+                        } catch (Exception e) {
+                            System.out.println("Not a valid day to run.");
                         }
                     }
                 }
