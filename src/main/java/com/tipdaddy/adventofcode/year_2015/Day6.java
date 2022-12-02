@@ -1,88 +1,13 @@
 package com.tipdaddy.adventofcode.year_2015;
 
+import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
-import com.tipdaddy.adventofcode.util.Point;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Day6 {
+public class Day6 implements Day {
 
-    public static void turnOnLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] = true;
-            }
-        }
-    }
-
-    public static void upBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] += 1;
-            }
-        }
-    }
-
-    public static void turnOffLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] = false;
-            }
-        }
-    }
-
-    public static void downBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] = Math.max(lights[x][y] - 1, 0);
-            }
-        }
-    }
-
-    public static void toggleLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] = !lights[x][y];
-            }
-        }
-    }
-
-    public static void toggleBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
-
-        for (int x = startX; x <= endX; x++) {
-            for (int y = startY; y <= endY; y++) {
-                lights[x][y] += 2;
-            }
-        }
-    }
-
-    public static int countOnLights(final boolean[][] lights) {
-        int count = 0;
-        for (int x = 0; x < lights.length; x++) {
-            for (int y = 0; y < lights[x].length; y++) {
-                count += lights[x][y] ? 1 : 0;
-            }
-        }
-        return count;
-    }
-
-    public static int countBrightness(final int[][] lights) {
-        int count = 0;
-        for (int x = 0; x < lights.length; x++) {
-            for (int y = 0; y < lights[x].length; y++) {
-                count += lights[x][y];
-            }
-        }
-        return count;
-    }
-
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         boolean[][] lights = new boolean[1000][1000];
         int[][] brightness = new int[1000][1000];
@@ -113,7 +38,81 @@ public class Day6 {
             }
         });
 
-        System.out.println(countOnLights(lights));
-        System.out.println(countBrightness(brightness));
+        System.out.printf("Part 1: %d\n", countOnLights(lights));
+        System.out.printf("Part 2: %d\n", countBrightness(brightness));
+    }
+
+    public void turnOnLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] = true;
+            }
+        }
+    }
+
+    public void upBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] += 1;
+            }
+        }
+    }
+
+    public void turnOffLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] = false;
+            }
+        }
+    }
+
+    public void downBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] = Math.max(lights[x][y] - 1, 0);
+            }
+        }
+    }
+
+    public void toggleLights(final boolean[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] = !lights[x][y];
+            }
+        }
+    }
+
+    public void toggleBrightness(final int[][] lights, final int startX, final int startY, final int endX, final int endY) {
+
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                lights[x][y] += 2;
+            }
+        }
+    }
+
+    public int countOnLights(final boolean[][] lights) {
+        int count = 0;
+        for (boolean[] x : lights) {
+            for (boolean y : x) {
+                count += y ? 1 : 0;
+            }
+        }
+        return count;
+    }
+
+    public int countBrightness(final int[][] lights) {
+        int count = 0;
+        for (int[] x : lights) {
+            for (int y : x) {
+                count += y;
+            }
+        }
+        return count;
     }
 }

@@ -1,28 +1,34 @@
 package com.tipdaddy.adventofcode.year_2015;
 
+import com.tipdaddy.adventofcode.util.Day;
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class Day4 {
+public class Day4 implements Day {
 
     private static final String SECRET = "ckczppom";
 
-    public static String getHash(final Integer n) {
+    public String getHash(final Integer n) {
 
         return DigestUtils.md5Hex(SECRET + n);
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         int n = 0;
-        // Part 2 is 6 0's, just change below.
-        final String desiredPrefix = "00000";
+        final String desiredPrefix1 = "00000";
+        final String desiredPrefix2 = "000000";
+        boolean gavePart1 = false;
         while (true) {
 
             String hash = getHash(n);
-            if (hash.startsWith(desiredPrefix)) {
-                System.out.println(n);
+            if (hash.startsWith(desiredPrefix1) && !gavePart1) {
+                gavePart1 = true;
+                System.out.printf("Part 1: %d\n", n);
+            } else if (hash.startsWith(desiredPrefix2)) {
+                System.out.printf("Part 2: %d\n", n);
                 break;
-            } else {
+            }else {
                 n++;
             }
         }

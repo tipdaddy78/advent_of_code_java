@@ -1,13 +1,15 @@
 package com.tipdaddy.adventofcode.year_2015;
 
+import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
 import com.tipdaddy.adventofcode.util.Point;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Day3 {
+public class Day3 implements Day {
 
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         final String directions = FileReader.readSingleLineFile("2015", "3");
         int x = 0;
@@ -47,7 +49,7 @@ public class Day3 {
             roboSanta = !roboSanta;
         }
 
-        System.out.println(houses1.size());
-        System.out.println(houses2.size());
+        System.out.printf("Part 1: %d\n", houses1.size());
+        System.out.printf("Part 2: %d\n", houses2.size());
     }
 }

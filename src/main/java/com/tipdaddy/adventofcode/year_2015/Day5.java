@@ -1,18 +1,16 @@
 package com.tipdaddy.adventofcode.year_2015;
 
+import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-public class Day5 {
+public class Day5 implements Day {
 
     public static final Set<String> DISALLOWED = Set.of("ab", "cd", "pq", "xy");
     public static final Set<Character> VOWELS = Set.of('a', 'e', 'i', 'o', 'u');
 
-    public static boolean hasThreeVowels(final String word) {
+    public boolean hasThreeVowels(final String word) {
 
         return word
                 .chars()
@@ -20,13 +18,13 @@ public class Day5 {
                 .count() >= 3;
     }
 
-    public static boolean hasDisallowed(final String word) {
+    public boolean hasDisallowed(final String word) {
 
         return DISALLOWED.stream()
                 .anyMatch(word::contains);
     }
 
-    public static boolean hasDouble(final String word) {
+    public boolean hasDouble(final String word) {
 
         for (int i = 0; i < word.length(); i++) {
             // No next character to check
@@ -40,7 +38,7 @@ public class Day5 {
         return false;
     }
 
-    public static boolean hasAtLeastTwoPairsNotOverlapping(final String word) {
+    public boolean hasAtLeastTwoPairsNotOverlapping(final String word) {
 
         for (int i = 0; i < word.length(); i++) {
             // No next characters to check
@@ -55,7 +53,7 @@ public class Day5 {
         return false;
     }
 
-    public static boolean hasSandwich(final String word) {
+    public boolean hasSandwich(final String word) {
 
         for (int i = 0; i < word.length(); i++) {
             // No next characters to check
@@ -69,14 +67,15 @@ public class Day5 {
         return false;
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         final List<String> lines = FileReader.readMultiLineFile("2015", "5");
 
         int niceCount1 = (int) lines.stream().filter(word -> hasThreeVowels(word) && !hasDisallowed(word) && hasDouble(word)).count();
-        System.out.println(niceCount1);
+        System.out.printf("Part 1: %d\n", niceCount1);
 
         int niceCount2 = (int) lines.stream().filter(word -> hasAtLeastTwoPairsNotOverlapping(word) && hasSandwich(word)).count();
-        System.out.println(niceCount2);
+        System.out.printf("Part 2: %d\n", niceCount2);
     }
 }

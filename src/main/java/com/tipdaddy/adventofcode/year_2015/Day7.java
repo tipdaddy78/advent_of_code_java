@@ -1,5 +1,6 @@
 package com.tipdaddy.adventofcode.year_2015;
 
+import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,43 +9,11 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.function.BiFunction;
-import org.apache.commons.lang3.StringUtils;
 
-public class Day7 {
+public class Day7 implements Day {
 
-    private static void andWires(String wireA, String wireB, String dest, Map<String, Integer> wires) {
-        wires.put(dest, wires.get(wireA) & wires.get(wireB));
-    }
-
-    private static void andWires(int valueA, String wireB, String dest, Map<String, Integer> wires) {
-        wires.put(dest, valueA & wires.get(wireB));
-    }
-
-    private static void orWires(String wireA, String wireB, String dest, Map<String, Integer> wires) {
-        wires.put(dest, wires.get(wireA) | wires.get(wireB));
-    }
-
-    private static void leftShift(String wire, int dist, String dest, Map<String, Integer> wires) {
-        wires.put(dest, wires.get(wire) << dist);
-    }
-
-    private static void rightShift(String wire, int dist, String dest, Map<String, Integer> wires) {
-        wires.put(dest, wires.get(wire) >> dist);
-    }
-
-    private static void complement(String wire, String dest, Map<String, Integer> wires) {
-        wires.put(dest, ~wires.get(wire));
-    }
-
-    private static final BiFunction<String, List<String>, List<String>> updateDirectionMap = (k, v) -> {
-        if (v == null) {
-            v = new ArrayList<>();
-        }
-        v.add(k);
-        return v;
-    };
-
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         List<String> directions = FileReader.readMultiLineFile("2015", "7");
         Map<String, List<String>> directionMap = new HashMap<>();
@@ -94,7 +63,7 @@ public class Day7 {
                 }
             } else if (direction.contains("AND") || direction.contains("OR")) {
                 try {
-                    Integer num = Integer.parseInt(dParts[0]);
+                    int num = Integer.parseInt(dParts[0]);
                     if (!wires.containsKey(dParts[2])) {
                         dQueue.add(direction);
                         continue;
@@ -125,4 +94,38 @@ public class Day7 {
         }
         System.out.println(wires.get("a"));
     }
+
+    private void andWires(String wireA, String wireB, String dest, Map<String, Integer> wires) {
+        wires.put(dest, wires.get(wireA) & wires.get(wireB));
+    }
+
+    private void andWires(int valueA, String wireB, String dest, Map<String, Integer> wires) {
+        wires.put(dest, valueA & wires.get(wireB));
+    }
+
+    private void orWires(String wireA, String wireB, String dest, Map<String, Integer> wires) {
+        wires.put(dest, wires.get(wireA) | wires.get(wireB));
+    }
+
+    private void leftShift(String wire, int dist, String dest, Map<String, Integer> wires) {
+        wires.put(dest, wires.get(wire) << dist);
+    }
+
+    private void rightShift(String wire, int dist, String dest, Map<String, Integer> wires) {
+        wires.put(dest, wires.get(wire) >> dist);
+    }
+
+    private void complement(String wire, String dest, Map<String, Integer> wires) {
+        wires.put(dest, ~wires.get(wire));
+    }
+
+    private final BiFunction<String, List<String>, List<String>> updateDirectionMap = (k, v) -> {
+        if (v == null) {
+            v = new ArrayList<>();
+        }
+        v.add(k);
+        return v;
+    };
+
+
 }

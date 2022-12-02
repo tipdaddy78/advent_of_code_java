@@ -1,11 +1,12 @@
 package com.tipdaddy.adventofcode.year_2022;
 
+import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Day2 {
+public class Day2 implements Day {
 
     private enum MatchResult {
         WIN,
@@ -35,7 +36,7 @@ public class Day2 {
         MATCH_RESULT_STRATEGY_MAP.put("Z", MatchResult.WIN);
     }
 
-    public static int part1_getRoundScore(final String yourEncryptedMove, final String opponentEncryptedMove) {
+    public int part1_getRoundScore(final String yourEncryptedMove, final String opponentEncryptedMove) {
 
         final Move opponentMove = MOVE_STRATEGY_MAP.get(opponentEncryptedMove);
         final Move yourMove = MOVE_STRATEGY_MAP.get(yourEncryptedMove);
@@ -66,7 +67,7 @@ public class Day2 {
         return getScore(yourMove, matchResult);
     }
 
-    public static int part2_getRoundScore(final String encryptedMatchResult, final String opponentEncryptedMove) {
+    public int part2_getRoundScore(final String encryptedMatchResult, final String opponentEncryptedMove) {
 
         final Move opponentMove = MOVE_STRATEGY_MAP.get(opponentEncryptedMove);
         final MatchResult matchResult = MATCH_RESULT_STRATEGY_MAP.get(encryptedMatchResult);
@@ -97,7 +98,7 @@ public class Day2 {
         return getScore(yourMove, matchResult);
     }
 
-    public static int getScore(final Move yourMove, final MatchResult matchResult) {
+    public int getScore(final Move yourMove, final MatchResult matchResult) {
 
         final int shapeScore = switch(yourMove) {
             case ROCK -> 1;
@@ -115,7 +116,8 @@ public class Day2 {
         return shapeScore + matchResultScore;
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void run() {
 
         List<String> matches = FileReader.readMultiLineFile("2022", "2");
         final int totalScorePart1 = matches
