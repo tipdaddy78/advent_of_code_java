@@ -4,10 +4,12 @@ import com.tipdaddy.adventofcode.util.Day;
 import com.tipdaddy.adventofcode.util.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 public class Day7 implements Day {
@@ -36,16 +38,25 @@ public class Day7 implements Day {
             } else if (d.contains("NOT")) {
                 directionMap.put(dParts[1], directionMap.compute(dParts[1], updateDirectionMap));
             } else {
-                // THERE'S A VALUE
-                dQueue.remove(d);
-                priorityDirections.add(d);
+                try {
+                    Integer num = Integer.parseInt(dParts[0]);
+                    // THERE'S A VALUE
+                    dQueue.remove(d);
+                    priorityDirections.add(d);
+                } catch (NumberFormatException e) {
+                    directionMap.put(dParts[0], directionMap.compute(dParts[0], updateDirectionMap));
+                }
             }
         });
 
+        Set<String> completed = new HashSet<>();
         while(!dQueue.isEmpty()) {
-            String direction = dQueue.remove();
+//            String direction = dQueue.remove();
+            String direction = "";
             if (!priorityDirections.isEmpty()) {
-
+                direction = priorityDirections.remove();
+            } else {
+                direction = dQueue.remove();
             }
 
             String[] dParts = direction.split(" ");
@@ -91,6 +102,10 @@ public class Day7 implements Day {
                 // THERE'S A VALUE
                 wires.put(dParts[2], Integer.parseInt(dParts[0]));
             }
+            // Add direction to completed set to prevent multiple completions
+            // Grab its destination to add to the priority directions
+            completed.add(direction);
+
         }
         System.out.println(wires.get("a"));
     }

@@ -17,10 +17,10 @@ public class AdventOfCode {
         final Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Valid years include: " + VALID_YEARS);
-            System.out.println("To quit the program, simply enter q as the year.");
+            System.out.println("To quit the program, simply enter 'q' as the year.");
             System.out.print("Year to run from? ");
             String year = scanner.nextLine();
-            if (year.equalsIgnoreCase("q")) {
+            if (year.replaceAll("'", "").equalsIgnoreCase("q")) {
                 System.out.println("Quit command detected, now exiting...");
                 break;
             } else if (!VALID_YEARS.contains(year)) {
@@ -30,7 +30,7 @@ public class AdventOfCode {
                     System.out.printf("Selected year is %s. To select a new year, type 'new'\n", year);
                     System.out.print("Day to run? ");
                     String day = scanner.nextLine();
-                    if (day.equalsIgnoreCase("new")) {
+                    if (day.replaceAll("'", "").equalsIgnoreCase("new")) {
                         System.out.println("Returning to year selection.");
                         break;
                     } else {
@@ -41,7 +41,11 @@ public class AdventOfCode {
                             Day dayToRun = constructor.newInstance();
                             dayToRun.run();
                         } catch (Exception e) {
-                            System.out.println("Not a valid day to run.");
+                            if (e instanceof ClassNotFoundException) {
+                                System.out.println("Entered day is not a valid day to run.");
+                            } else {
+                                System.out.println("Something went wrong. Try another day.  If the problem persists, let tipdaddy know by creating an issue on Github.");
+                            }
                         }
                     }
                 }
