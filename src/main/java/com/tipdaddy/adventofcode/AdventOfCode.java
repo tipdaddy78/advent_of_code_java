@@ -44,6 +44,7 @@ public class AdventOfCode {
                             if (e instanceof ClassNotFoundException) {
                                 System.out.println("Entered day is not a valid day to run.");
                             } else {
+                                e.printStackTrace();
                                 System.out.println("Something went wrong. Try another day.  If the problem persists, let tipdaddy know by creating an issue on Github.");
                             }
                         }
