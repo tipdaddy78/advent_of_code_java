@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class AdventOfCode {
 
-    private static final Set<String> VALID_YEARS = Set.of("2015", "2022");
+    private static final Set<String> VALID_YEARS = Set.of("2015", "2021", "2022");
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {

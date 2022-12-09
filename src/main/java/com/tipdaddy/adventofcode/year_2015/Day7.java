@@ -100,7 +100,16 @@ public class Day7 implements Day {
                 complement(dParts[1], dParts[3], wires);
             } else {
                 // THERE'S A VALUE
-                wires.put(dParts[2], Integer.parseInt(dParts[0]));
+                try {
+                    Integer num = Integer.parseInt(dParts[0]);
+                    // THERE'S A VALUE
+                    wires.put(dParts[2], num);
+                } catch (NumberFormatException e) {
+                    if (!wires.containsKey(dParts[0])) {
+                        dQueue.add(direction);
+                        continue;
+                    }
+                }
             }
             // Add direction to completed set to prevent multiple completions
             // Grab its destination to add to the priority directions
